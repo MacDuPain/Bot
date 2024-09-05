@@ -12,12 +12,12 @@ export function getMotionStakedEmbed(timestamp: number) {
     .setDescription(
       `**{amountPayed} {colonyTickers}** has been requested to **{recipientUsername}** ({recipient})`
     )
-    // .setThumbnail(
-    //   "https://cdn.discordapp.com/attachments/1087723564154749000/1095023300482191430/Forced.png"
-    // )
+    .setThumbnail(
+      "https://raw.githubusercontent.com/MacDuPain/Bot/c55dc8239b756b4a1c08f81354c4da22155a8d3f/src/Assets/images/Motion.png"
+    )
     .setAuthor({
       name: `{colonyName}`,
-      // iconURL: "attachment://colony-avatar.png",
+      iconURL: "https://raw.githubusercontent.com/MacDuPain/Bot/master/src/Assets/images/Logo-ChronoDAO.png",
     })
     .addFields({ value: `In **{domain}** team.`, name: "\u200B" })
     .setFooter({
