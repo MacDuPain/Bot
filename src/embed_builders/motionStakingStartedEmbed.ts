@@ -4,16 +4,7 @@ export function getMotionStakingStartedMentions() {
   return "a new payment request has been made and is pending taking 0/100 CHR Staked";
 }
 
-function getActionTypeImage(actionType: string){
-  if(actionType == "PAYMENT_MOTION"){
-    return "https://raw.githubusercontent.com/MacDuPain/Bot/c55dc8239b756b4a1c08f81354c4da22155a8d3f/src/Assets/images/Motion.png"
-  } else {
-    return "https://raw.githubusercontent.com/MacDuPain/Bot/Development/src/Assets/images/Forced.png"
-  }
-}
-
-export function getMotionStakingStartedEmbed(timestamp: number) {
-  const thumbnailUrl = getActionTypeImage("PAYMENT_FORCE")
+export function getMotionStakingStartedEmbed(timestamp: number, thumbnailUrl: string) {
 
   const embed = new EmbedBuilder()
     .setColor(0xf7c325)
