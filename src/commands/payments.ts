@@ -1,18 +1,15 @@
-import { CommandInteraction, SlashCommandBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from "discord.js";
+import { CommandInteraction, SlashCommandBuilder, Message } from "discord.js";
 import { getMotionStakingStartedMentions, getMotionStakingStartedEmbed }  from "../embed_builders/motionStakingStartedEmbed"
+import { storeDiscordNotification } from "../script";
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 export const data = new SlashCommandBuilder()
     .setName("payments")
     .setDescription("Notify of payments transaction")
 
 export async function execute(interaction: CommandInteraction, timestamp: number) {
-
-    const button = new ButtonBuilder()
-    .setLabel("View transaction on Colony")
-    .setStyle(ButtonStyle.Link)
-    .setURL("https://coconut-harrier-5b4.notion.site/Colony-Notification-discord-bot-d4f2334903a4481d9c11253b7ed9c808");
-
-    const row = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
 
     // Mention the user who triggered the command
     const userId = interaction.user.id;
@@ -21,7 +18,8 @@ export async function execute(interaction: CommandInteraction, timestamp: number
     const embed = getMotionStakingStartedEmbed(timestamp)
     const mentions = getMotionStakingStartedMentions()
 
-    return interaction.reply({
+    // Send the reply and get the message object
+    const message: Message = await interaction.reply({
       content: `<@${userId}> ${mentions}`,
       embeds: [embed],
       components: [
@@ -37,6 +35,22 @@ export async function execute(interaction: CommandInteraction, timestamp: number
             },
           ],
         },
-      ]
+      ],
+      fetchReply: true, // Ensure the reply is fetched
     });
+
+    // Log or use the message information
+    console.log("Notification sent:");
+    // console.log(message);
+    console.log(`Message ID: ${message.id}`);
+    console.log(`Channel ID: ${message.channel.id}`);
+    await storeDiscordNotification(message)
+      .then(async () => {
+        await prisma.$disconnect()
+      })
+      .catch(async (e) => {
+        console.error(e)
+        await prisma.$disconnect()
+        process.exit(1)
+      })
 }
