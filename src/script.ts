@@ -3,16 +3,24 @@ import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
-export async function storeDiscordNotification(discordAnswer: Message) {
+// Définir une interface pour l'objet discordMember
+interface DiscordMember {
+  colonyUserId: string;
+  discordUserId: string;
+  walletAddress: string;
+}
+
+export async function storeDiscordMember(discordMember: DiscordMember) {
   try {
-    const notification = await prisma.notification.create({
+    const user = await prisma.user.create({
       data: {
-        transactionId: discordAnswer.id,
-        discordLink: discordAnswer.channel.id,
+        id: discordMember.colonyUserId,
+        discordUserId: discordMember.discordUserId,
+        walletAdress: discordMember.walletAddress
       },
     });
-    console.log("🎉 Les notifications sont bien enregistrées");
-    console.log(notification);
+    console.log("🎉 L'utilisateur a bien été enregistré");
+    // console.log(user);
   } catch (e) {
     console.error(e);
     process.exit(1);
@@ -21,3 +29,20 @@ export async function storeDiscordNotification(discordAnswer: Message) {
   }
 }
 
+export async function storeDiscordNotification(colonyTransactionId: string, discordAnswer: Message) {
+  try {
+    const notification = await prisma.notification.create({
+      data: {
+        transactionId: colonyTransactionId,
+        discordLink: discordAnswer.id,
+      },
+    });
+    console.log("🎉 Les notifications sont bien enregistrées");
+    // console.log(notification);
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  } finally {
+    await prisma.$disconnect();
+  }
+}

@@ -17,7 +17,11 @@ function getActionTypeImage(actionType: string){
 
 export async function execute(interaction: CommandInteraction, timestamp: number) {
 
-    const alreadyNotified = await verifyIfNotificationSent("1281557392sdvsdv592736308")
+    //colony variables for testing:
+    const colonyTransactionId: string = "skuvzzsefzseczec"
+
+    //Verify if the bot has already sent notification to discord
+    const alreadyNotified = await verifyIfNotificationSent(colonyTransactionId)
     if(alreadyNotified){
       console.log("This notification has already been sent by the bot");
       return;
@@ -52,7 +56,7 @@ export async function execute(interaction: CommandInteraction, timestamp: number
     // console.log(message);
     // console.log(`Message ID: ${message.id}`);
     // console.log(`Channel ID: ${message.channel.id}`);
-    await storeDiscordNotification(message)
+    await storeDiscordNotification(colonyTransactionId, message)
 
 }
 
