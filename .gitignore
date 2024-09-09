@@ -24,3 +24,6 @@ Editor directories and files
 *.njsproj
 *.sln
 *.sw?
+
+prisma/dev.db
+prisma/migrations
