@@ -5,7 +5,7 @@ export function getMotionRejectedMentions() {
     "The motion was rejected";
 }
 
-function getMotionRejectedEmbed(timestamp: number) {
+export function getMotionRejectedEmbed(timestamp: number, thumbnailUrl: string) {
 
   const embed = new EmbedBuilder()
     .setColor(0xd3455b)
@@ -13,9 +13,7 @@ function getMotionRejectedEmbed(timestamp: number) {
     .setDescription(
       `**{amountPayed} {colonyTickers}** has been requested to **{recipientUsername}** ({recipient})`
     )
-    .setThumbnail(
-      "https://raw.githubusercontent.com/MacDuPain/Bot/c55dc8239b756b4a1c08f81354c4da22155a8d3f/src/Assets/images/Motion.png"
-    )
+    .setThumbnail(thumbnailUrl)
     .setAuthor({
       name: `{colonyName}`,
       iconURL: "https://raw.githubusercontent.com/MacDuPain/Bot/master/src/Assets/images/Logo-ChronoDAO.png",

@@ -11,12 +11,12 @@ datasource db {
 }
 
 model User {
-  id    String     @id 
-  discordUserId String  
+  id            String @id
+  discordUserId String
   walletAdress  String @unique
 }
 
 model Notification {
-  transactionId        String     @id  
-  discordLink String
+  transactionId String @id
+  discordLink   String
 }
