@@ -18,7 +18,7 @@ function getActionTypeImage(actionType: string){
 export async function execute(interaction: CommandInteraction, timestamp: number) {
 
     //colony variables for testing:
-    const colonyTransactionId: string = "skuvzerv35135qrv13er5v"
+    const colonyTransactionId: string = "skuvzzsefzseczec"
 
     //Verify if the bot has already sent notification to discord
     const alreadyNotified = await verifyIfNotificationSent(colonyTransactionId)
