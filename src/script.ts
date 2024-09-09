@@ -19,7 +19,7 @@ export async function storeDiscordMember(discordMember: DiscordMember) {
         walletAdress: discordMember.walletAddress
       },
     });
-    console.log("🎉 Les notifications sont bien enregistrées");
+    console.log("🎉 L'utilisateur a bien été enregistré");
     // console.log(user);
   } catch (e) {
     console.error(e);
@@ -29,16 +29,16 @@ export async function storeDiscordMember(discordMember: DiscordMember) {
   }
 }
 
-export async function storeDiscordNotification(discordAnswer: Message) {
+export async function storeDiscordNotification(colonyTransactionId: string, discordAnswer: Message) {
   try {
     const notification = await prisma.notification.create({
       data: {
-        transactionId: discordAnswer.id,
-        discordLink: discordAnswer.channel.id,
+        transactionId: colonyTransactionId,
+        discordLink: discordAnswer.id,
       },
     });
     console.log("🎉 Les notifications sont bien enregistrées");
-    console.log(notification);
+    // console.log(notification);
   } catch (e) {
     console.error(e);
     process.exit(1);

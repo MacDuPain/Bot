@@ -11,9 +11,13 @@ interface DiscordMember {
 export const data = new SlashCommandBuilder()
     .setName("add_member")
     .setDescription("Add member to colony bot notification list")
-    .addStringOption(option => 
-      option.setName("member_id")
+    .addUserOption(option => 
+      option.setName("member_discord_id")
           .setDescription("member's discord id")
+          .setRequired(true))
+    .addStringOption(option => 
+      option.setName("member_colony_id")
+          .setDescription("member's colony id")
           .setRequired(true))
     .addStringOption(option => 
       option.setName("member_wallet")
@@ -21,19 +25,19 @@ export const data = new SlashCommandBuilder()
           .setRequired(true))
 
 export async function execute(interaction: CommandInteraction) {
-    const memberId = interaction.options.get("member_id")?.value as string;
+    const memberDiscordId = interaction.options.get("member_discord_id")?.value as string;
+    const memberColonyId = interaction.options.get("member_colony_id")?.value as string;
     const memberWallet = interaction.options.get("member_wallet")?.value as string;
-    const colonyUserId = "3513514384653"; //id fictif
 
     const discordMember = {
-      colonyUserId: colonyUserId,
-      discordUserId: memberId,
+      colonyUserId: memberColonyId,
+      discordUserId: memberDiscordId,
       walletAddress: memberWallet
     };
 
     storeDiscordMember(discordMember)
     
     return interaction.reply({
-      content: `🎉 <@${memberId}> has been added to notification list`,
+      content: `🎉 <@${memberDiscordId}> has been added to notification list`,
     });
 }
