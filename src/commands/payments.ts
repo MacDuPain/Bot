@@ -3,7 +3,15 @@ import { getMotionStakingStartedMentions, getMotionStakingStartedEmbed }  from "
 
 export const data = new SlashCommandBuilder()
     .setName("payments")
-    .setDescription("Notify of payments transaction")
+    .setDescription("Notify of payments transaction");
+
+function getActionTypeImage(actionType: string){
+  if(actionType == "PAYMENT_MOTION"){
+    return "https://raw.githubusercontent.com/MacDuPain/Bot/c55dc8239b756b4a1c08f81354c4da22155a8d3f/src/Assets/images/Motion.png"
+  } else {
+    return "https://raw.githubusercontent.com/MacDuPain/Bot/Development/src/Assets/images/Forced.png"
+  }
+}
 
 export async function execute(interaction: CommandInteraction, timestamp: number) {
 
@@ -18,7 +26,8 @@ export async function execute(interaction: CommandInteraction, timestamp: number
     const userId = interaction.user.id;
 
     // Create the embed
-    const embed = getMotionStakingStartedEmbed(timestamp)
+    const thumbnailUrl = getActionTypeImage("PAYMENT_MOTION")
+    const embed = getMotionStakingStartedEmbed(timestamp, thumbnailUrl)
     const mentions = getMotionStakingStartedMentions()
 
     return interaction.reply({
@@ -40,3 +49,4 @@ export async function execute(interaction: CommandInteraction, timestamp: number
       ]
     });
 }
+
